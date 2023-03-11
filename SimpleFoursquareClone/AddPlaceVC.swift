@@ -28,7 +28,22 @@ class AddPlaceVC: UIViewController , UIImagePickerControllerDelegate , UINavigat
 
     
     @IBAction func nextButtonClicked(_ sender: Any) {
+        if placeNameText.text != "" && placeTypeText.text != "" && placeAtmosphereText.text != "" {
+            if let choosenImage = placeImageView.image {
+                let placeModel = PlaceModel.sharedInstance
+                placeModel.placeName = placeNameText.text!
+                placeModel.placeType = placeTypeText.text!
+                placeModel.placeAtmosphere = placeAtmosphereText.text!
+                placeModel.placeImage = choosenImage
+            }
         performSegue(withIdentifier: "toMapVC", sender: nil)
+        } else {
+            let alert = UIAlertController(title:"Error" , message: "Place Type , Place Name and Place Atmosphere fields can not be empty", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+            alert.addAction(okButton)
+            present(alert, animated: true)
+        }
+        
     }
     
     @objc func chooseImage(){
